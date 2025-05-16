@@ -23,7 +23,7 @@ const CustomDrawer = ({ trigger, children,title, className ,direction }: DrawerP
         {trigger}
       </DrawerTrigger>
        <DrawerContent direction={direction || "right"} className={className}>
-        <DrawerTitle className="text-lg font-semibold px-4  border-b-2">
+        <DrawerTitle className="text-lg  px-4  border-b-2">
          {title}
         </DrawerTitle>
         <div className="p-4">{children}</div>

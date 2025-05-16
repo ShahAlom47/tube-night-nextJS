@@ -6,6 +6,7 @@ const NavMenu = () => {
   return (
     <div>
       <CustomDrawer
+      className="w-[30%]"
         title="Menu"
         trigger={
           <button className="text-xl hover:scale-110 ">
