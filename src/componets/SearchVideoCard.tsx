@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import { SearchVideo } from '@/interfaces/videoInterface';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { IoMdDownload } from 'react-icons/io';
+import { SearchVideo } from "@/interfaces/videoInterface";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { IoMdDownload } from "react-icons/io";
+import DownloadModal from "./DownloadModal";
 
 interface Props {
   video: SearchVideo;
@@ -18,10 +19,7 @@ const SearchVideoCard = ({ video }: Props) => {
     router.push(`/watch/${videoId}`);
   };
 
-  const handleDownload = () => {
-    const downloadLink = `https://www.youtube.com/watch?v=${videoId}`;
-    window.open(downloadLink, '_blank');
-  };
+  
 
   return (
     <div
@@ -41,18 +39,17 @@ const SearchVideoCard = ({ video }: Props) => {
         <div>
           <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
           <p className="text-sm text-gray-600 mt-1">{channelTitle}</p>
-          <p className="text-xs text-gray-400">{new Date(publishedAt).toLocaleDateString()}</p>
+          <p className="text-xs text-gray-400">
+            {new Date(publishedAt).toLocaleDateString()}
+          </p>
         </div>
 
-        <button
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent navigating to watch page
-            handleDownload();
-          }}
-          className="mt-4 w-fit bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition flex items-center gap-2"    
-        >
-       Download <IoMdDownload />
-        </button>
+        {/* Other video info */}
+        <DownloadModal videoId={videoId} videoTitle={title}>
+          <button className=" flex items-center gap-2">
+            Download <IoMdDownload />
+          </button>
+        </DownloadModal>
       </div>
     </div>
   );

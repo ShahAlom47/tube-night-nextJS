@@ -39,12 +39,6 @@ const SearchResultsPage = () => {
     fetchResults(true, 1);
   }, [query]);
 
-  const handleMore = () => {
-    const nextPage = page + 1;
-    setPage(nextPage);
-    fetchResults(false, nextPage);
-  };
-
   return (
     <div className="p-4">
       <h1 className="text-sm font-semibold mb-4">
@@ -60,15 +54,7 @@ const SearchResultsPage = () => {
               <SearchVideoCard key={video?.id?.videoId || index + 'video'} video={video} />
             ))}
           </ul>
-          <div className="my-4 flex justify-center">
-            <button
-              onClick={handleMore}
-              className="border-2 px-3 py-1 bg-white rounded-sm hover:bg-gray-100"
-              disabled={loading}
-            >
-              {loading ? 'Loading...' : 'Load more'}
-            </button>
-          </div>
+      
         </>
       ) : (
         <p>No results found.</p>
