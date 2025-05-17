@@ -14,12 +14,11 @@ const SearchResultsPage = () => {
   const [page, setPage] = useState(1);
   const limit = 12;
 
-  // Fetch results with optional reset
-  const fetchResults = async (reset = false) => {
+  const fetchResults = async (reset = false, pageNum = page) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/search?query=${query}&limit=${limit}&page=${reset ? 1 : page}`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/search?query=${query}&limit=${limit}&page=${reset ? 1 : pageNum}`
       );
       const data = await res.json();
       if (reset) {
@@ -34,18 +33,16 @@ const SearchResultsPage = () => {
     }
   };
 
-  // When query changes, reset results and fetch first page
   useEffect(() => {
     if (!query) return;
     setPage(1);
-    fetchResults(true);
-  }, [query,page]);
+    fetchResults(true, 1);
+  }, [query]);
 
-  // Load more data (next page)
   const handleMore = () => {
     const nextPage = page + 1;
     setPage(nextPage);
-    fetchResults();
+    fetchResults(false, nextPage);
   };
 
   return (
@@ -59,8 +56,8 @@ const SearchResultsPage = () => {
       ) : results.length ? (
         <>
           <ul className="space-y-2">
-            {results.map((video: any,index) => (
-              <SearchVideoCard key={video?.id?.videoId ||  index+"video"} video={video} />
+            {results.map((video: any, index) => (
+              <SearchVideoCard key={video?.id?.videoId || index + 'video'} video={video} />
             ))}
           </ul>
           <div className="my-4 flex justify-center">
