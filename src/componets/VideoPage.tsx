@@ -4,6 +4,8 @@
 import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import RelatedVideos from "./RelatedVideos";
+import Loading from "@/app/loading";
+import { IoMdDownload } from "react-icons/io";
 
 interface VideoPageProps {
   videoId: string;
@@ -38,27 +40,27 @@ const VideoPage: React.FC<VideoPageProps> = ({ videoId }) => {
   }, [videoId]);
 
   if (!videoData) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
     <div className="p-4">
       <div className="mb-4">
         <ReactPlayer
-        className="rounded-lg w-full h-full" 
+        className="rounded-lg w-full " 
           url={`https://www.youtube.com/watch?v=${videoId}`}
           width="100%"
         //   height="500px"
           controls
         />
-        <h1 className="text-2xl font-bold mt-2">{videoData.snippet.title}</h1>
+        <h1 className="text-2xl font-bold mt-2">{videoData?.snippet?.title}</h1>
         <button
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+          className="mt-2 px-4 py-2 bg-red-500 text-white rounded flex items-center gap-2 hover:bg-red-600 transition"
           onClick={() => {
             window.location.href = `/api/download?videoId=${videoId}`;
           }}
         >
-          Download
+          Download <IoMdDownload />
         </button>
       </div>
       <div>

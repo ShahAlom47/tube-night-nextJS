@@ -1,4 +1,4 @@
-import Header from "@/componets/Header";
+
 import HomeVideoContainer from "@/componets/HomeVideoContainer";
 
 async function getVideos() {
@@ -13,8 +13,15 @@ export default async function Home() {
 
   return (
     <div className="">
-      <Header />
-      <HomeVideoContainer videos={videos || []} />
+    {
+      videos.length > 0 ? (
+        <HomeVideoContainer videos={videos} />
+      ) : (
+        <div className="flex items-center justify-center h-screen">
+          <h1 className="text-2xl font-bold">No videos found</h1>
+        </div>
+      )
+    }
     </div>
   );
 }

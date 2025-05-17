@@ -2,8 +2,8 @@ import { NextResponse } from "next/server"
 
 export async function GET() {
   const API_KEY = process.env.YT_API_KEY
-  const maxResults = 12
-  const regionCode = "US"
+  const maxResults = 15
+  const regionCode = "BD"
 
   try {
     const response = await fetch(
