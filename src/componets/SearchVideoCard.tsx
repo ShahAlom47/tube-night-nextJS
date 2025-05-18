@@ -45,7 +45,7 @@ const SearchVideoCard = ({ video }: Props) => {
         </div>
 
         {/* Other video info */}
-        <DownloadModal videoId={videoId} videoTitle={title}>
+        <DownloadModal videoId={videoId} videoTitle={title} >
           <button className=" flex items-center gap-2">
             Download <IoMdDownload />
           </button>

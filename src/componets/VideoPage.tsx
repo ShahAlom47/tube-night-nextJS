@@ -17,7 +17,7 @@ const VideoPage: React.FC<VideoPageProps> = ({ videoId }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [relatedVideos, setRelatedVideos] = useState<any[]>([]);
 
-  console.log(videoId,relatedVideos)
+
 
   useEffect(() => {
     const fetchVideoData = async () => {
