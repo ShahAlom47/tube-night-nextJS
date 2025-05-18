@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logo from "../assets/logo/Tube.png";
 import SearchBox from "./SearchBox";
-import DownloadDropDown from "./DownloadDropDown";
+// import DownloadDropDown from "./DownloadDropDown";
 import NavMenu from "./NavMenu";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ const Header = () => {
 
       <div className=" flex-1  w-6/12 mx-2"><SearchBox></SearchBox></div>
       <div className="flex items-center space-x-4">
-        <DownloadDropDown></DownloadDropDown>
+        {/* <DownloadDropDown></DownloadDropDown> */}
         <NavMenu></NavMenu>
       </div>
     </div>
