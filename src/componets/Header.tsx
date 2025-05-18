@@ -7,13 +7,13 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <div className="flex items-center justify-between bg-white shadow-md px-4 py-2">
-   <Link href="/" className="flex items-center">
-      <Image className="w-20" src={logo} alt="logo"></Image>
+    <div className="flex items-center justify-between bg-white shadow-md px-4 py-2 gap-2   ">
+   <Link href="/" className="flex items-center ">
+      <Image className="lg:w-20 md:w-18 w-16 h-auto" src={logo} alt="logo"></Image>
     </Link>
 
 
-      <SearchBox></SearchBox>
+      <div className=" flex-1  w-6/12 mx-2"><SearchBox></SearchBox></div>
       <div className="flex items-center space-x-4">
         <DownloadDropDown></DownloadDropDown>
         <NavMenu></NavMenu>

@@ -23,21 +23,22 @@ const SearchVideoCard = ({ video }: Props) => {
 
   return (
     <div
-      className="flex flex-col sm:flex-row gap-4 border rounded-lg p-4 shadow-md hover:shadow-lg transition cursor-pointer"
-      onClick={handleClick}
+      className="flex flex-col sm:flex-row gap-4 border rounded-lg p-4 shadow-md hover:shadow-lg transition "
+      
     >
       <Image
+      onClick={handleClick}
         src={thumbnails.high.url}
         alt={title}
         width={320}
         height={180}
         unoptimized
-        className="rounded-md"
+        className="rounded-md cursor-pointer"
       />
 
       <div className="flex flex-col justify-between flex-1">
         <div>
-          <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+          <h3 onClick={handleClick} className="text-lg font-semibold text-gray-800 cursor-pointer hover:underline">{title}</h3>
           <p className="text-sm text-gray-600 mt-1">{channelTitle}</p>
           <p className="text-xs text-gray-400">
             {new Date(publishedAt).toLocaleDateString()}

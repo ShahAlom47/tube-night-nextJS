@@ -6,6 +6,7 @@ import ReactPlayer from "react-player";
 import RelatedVideos from "./RelatedVideos";
 import Loading from "@/app/loading";
 import { IoMdDownload } from "react-icons/io";
+import DownloadModal from "./DownloadModal";
 
 interface VideoPageProps {
   videoId: string;
@@ -54,14 +55,12 @@ const VideoPage: React.FC<VideoPageProps> = ({ videoId }) => {
           controls
         />
         <h1 className="text-2xl font-bold mt-2">{videoData?.snippet?.title}</h1>
-        <button
-          className="mt-2 px-4 py-2 bg-red-500 text-white rounded flex items-center gap-2 hover:bg-red-600 transition"
-          onClick={() => {
-            window.location.href = `/api/download?videoId=${videoId}`;
-          }}
-        >
-          Download <IoMdDownload />
-        </button>
+          <DownloadModal videoId={videoId} videoTitle={videoData?.snippet?.title} >
+          <button className=" flex items-center gap-2">
+            Download <IoMdDownload />
+          </button>
+        </DownloadModal>
+
       </div>
       <div>
         <h2 className="text-xl font-semibold mb-2">Related Videos</h2>

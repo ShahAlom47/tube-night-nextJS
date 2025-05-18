@@ -14,9 +14,6 @@ export async function GET(request: Request) {
 
     const info = await getYoutubeInfo(url);
 
-    const preferredNotes = ['144p', '440p', '720p', '1080p'];
-    
-    // Filter formats by preferred resolutions or mp3
     type YoutubeFormat = {
       format_id: string;
       format_note?: string;
@@ -27,10 +24,9 @@ export async function GET(request: Request) {
       vcodec?: string;
     };
 
-    let filteredFormats = info.formats
-      .filter((f: YoutubeFormat) =>
-        (f.format_note && preferredNotes.includes(f.format_note)) || f.ext === 'mp3'
-      )
+    // Filter formats to include only those with audio or audio-only
+    const filteredFormats = info.formats
+      .filter((f: YoutubeFormat) => f.acodec !== 'none') // keep only formats with audio
       .map((f: YoutubeFormat) => ({
         format_id: f.format_id,
         format_note: f.format_note,
@@ -39,27 +35,10 @@ export async function GET(request: Request) {
         url: f.url,
         acodec: f.acodec,
         vcodec: f.vcodec,
+        hasAudio: f.acodec !== 'none',          // flag if audio present
+        isVideo: f.vcodec !== 'none',           // flag if video present
       }));
 
-    // Fallback if no preferred formats found
-    if (filteredFormats.length === 0) {
-      const fallbackFormats = info.formats
-        .filter((f: YoutubeFormat) => f.vcodec !== 'none' && f.acodec !== 'none') // must have both video and audio
-        .slice(0, 3) // top 3 fallback formats
-        .map((f: YoutubeFormat) => ({
-          format_id: f.format_id,
-          format_note: f.format_note,
-          ext: f.ext,
-          filesize: f.filesize,
-          url: f.url,
-          acodec: f.acodec,
-          vcodec: f.vcodec,
-        }));
-
-      filteredFormats = fallbackFormats;
-    }
-
-    // Optional: No formats at all?
     if (filteredFormats.length === 0) {
       return NextResponse.json({ error: 'No supported formats found' }, { status: 404 });
     }
