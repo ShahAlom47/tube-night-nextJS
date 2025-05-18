@@ -22,12 +22,12 @@ const CustomDrawer = ({ trigger, children,title, className ,direction }: DrawerP
       <DrawerTrigger asChild>
         {trigger}
       </DrawerTrigger>
-       <DrawerContent direction={direction || "right"} className={className}>
-        <DrawerTitle className="text-lg  px-4  border-b-2">
+       <DrawerContent direction={direction || "right"} className={className  }>
+        <DrawerTitle className="text-lg  px-4  border-b-2 border-red-500 mb-0  py-1">
          {title}
         </DrawerTitle>
-        <div className="p-4">{children}</div>
-        <div className="p-4 w-full">
+        
+        <div className=" w-full">
           {children}
         </div>
       </DrawerContent>
