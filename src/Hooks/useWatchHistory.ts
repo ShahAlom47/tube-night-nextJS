@@ -1,16 +1,13 @@
+import { Video } from "@/interfaces/videoInterface";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 const DOWNLOAD_HISTORY_KEY = "watch_history_ids";
 
-interface VideoData {
-  id: string;
-  title: string;
-  thumbnail: string;
-}
+
 
  const useDownloadHistory = () => {
-  const [downloadData, setDownloadData] = useState<VideoData[]>([]);
+  const [downloadData, setDownloadData] = useState<Video[]>([]);
 
   // ✅ Add to history
 const addToDownloadHistory = (id: string) => {
@@ -23,7 +20,7 @@ const addToDownloadHistory = (id: string) => {
       existing.shift();
     }
 
-    const updated = [...existing, id];
+    const updated = [id, ...existing ];
     localStorage.setItem(DOWNLOAD_HISTORY_KEY, JSON.stringify(updated));
     fetchVideoData(updated);
   }
@@ -44,7 +41,7 @@ const fetchVideoData = async (ids: string[]) => {
     const query = ids.map(id => `ids=${id}`).join("&");
     const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getHistory?${query}`);
 
-    const data: VideoData[] = response?.data;
+    const data: Video[] = response?.data;
     setDownloadData(data);
   } catch (error) {
     console.error("Fetch error:", error);

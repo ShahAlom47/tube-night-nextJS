@@ -6,6 +6,9 @@ export interface Video {
     thumbnails: {
       medium: {
         url: string;
+      },
+      high: {
+        url: string;
       };
     };
   };
@@ -29,3 +32,26 @@ export interface SearchVideo {
     publishedAt: string;
   };
 }
+
+
+export interface WatchHistoryVideo {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  publishedAt: string;
+  channelTitle: string;
+  channelId: string;
+  tags: string[];
+  viewCount: number;
+  likeCount: number;
+  commentCount: number;
+  thumbnails: {
+    default: string;
+    medium: string;
+    high: string;
+    standard?: string;
+    maxres?: string;
+  };
+}
+
