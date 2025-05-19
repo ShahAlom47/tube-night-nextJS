@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 const DOWNLOAD_HISTORY_KEY = "download_history_ids";
 
 export const useDownloadHistory = () => {
-  const [downloadData, setDownloadData] = useState<Video[]>([]);
+  const [ids, setIds] = useState<string[]>([]);
 
   const addToDownloadHistory = (id: string) => {
-    const existing: string[] = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
+    const existing: string[] = JSON.parse(
+      localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]"
+    );
 
     if (!existing.includes(id)) {
       if (existing.length >= 12) {
@@ -17,15 +19,15 @@ export const useDownloadHistory = () => {
 
       const updated = [id, ...existing]; // Newest at the front
       localStorage.setItem(DOWNLOAD_HISTORY_KEY, JSON.stringify(updated));
-      fetchVideoData(updated);
+      setIds(updated);
+      // fetchVideoData(updated);
     }
   };
 
   const fetchVideoData = async (ids: string[]) => {
-     if (!ids.length) {
-    setDownloadData([]);
-    return;
-  }
+    if (!ids.length) {
+      return;
+    }
     try {
       const query = ids.map((id) => `ids=${id}`).join("&");
       const response = await axios.get(
@@ -33,26 +35,32 @@ export const useDownloadHistory = () => {
       );
 
       const data: Video[] = response?.data;
-      setDownloadData(data);
+      return data;
     } catch (error) {
       console.error("Fetch error:", error);
     }
   };
 
   const removeFromDownloadHistory = (id: string) => {
-    const existing: string[] = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
+    const existing: string[] = JSON.parse(
+      localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]"
+    );
     const updated = existing.filter((storedId) => storedId !== id);
     localStorage.setItem(DOWNLOAD_HISTORY_KEY, JSON.stringify(updated));
     fetchVideoData(updated);
   };
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
-    if (saved.length) fetchVideoData(saved);
+    const saved = JSON.parse(
+      localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]"
+    );
+    // if (saved.length) fetchVideoData(saved);
+    if (saved.length) setIds(saved);
   }, []);
 
   return {
-    downloadData,
+    ids,
+    fetchVideoData,
     addToDownloadHistory,
     removeFromDownloadHistory,
   };

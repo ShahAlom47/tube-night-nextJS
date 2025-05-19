@@ -3,7 +3,7 @@ import HomeVideoContainer from "@/componets/HomeVideoContainer";
 
 async function getVideos() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/videos`, {
-    cache: "no-store",
+   cache: "force-cache",
   });
   return res.json();
 }

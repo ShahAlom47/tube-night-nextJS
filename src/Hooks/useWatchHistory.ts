@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const WATCH_HISTORY_KEY = "watch_history_ids";
 
 const useWatchHistory = () => {
-  const [watchHistoryData, setWatchHistoryData] = useState<Video[]>([]);
+  const [ids, setIds] = useState<string[]>([]);
 
   // ✅ Add to watch history
   const addToWatchHistory = (id: string) => {
@@ -20,7 +20,7 @@ const useWatchHistory = () => {
 
       const updated = [id, ...existing]; // Add new ID to the beginning
       localStorage.setItem(WATCH_HISTORY_KEY, JSON.stringify(updated));
-      fetchWatchHistoryData(updated);
+      setIds(updated);
     }
   };
 
@@ -32,10 +32,10 @@ const useWatchHistory = () => {
     fetchWatchHistoryData(updated);
   };
 
-  // ✅ Fetch video data from server
+  // ✅ Fetch video data from server 
   const fetchWatchHistoryData = async (ids: string[]) => {
      if (!ids.length) {
-    setWatchHistoryData([]);
+    setIds([]);
     return;
   }
     try {
@@ -45,7 +45,7 @@ const useWatchHistory = () => {
       );
 
       const data: Video[] = response?.data;
-      setWatchHistoryData(data);
+     return data
     } catch (error) {
       console.error("Fetch error:", error);
     }
@@ -58,9 +58,11 @@ const useWatchHistory = () => {
   }, []);
 
   return {
-    watchHistoryData,
+    ids,
     addToWatchHistory,
     removeFromWatchHistory,
+  fetchWatchHistoryData 
+
   };
 };
 

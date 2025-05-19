@@ -1,14 +1,29 @@
 "use client";
 
-import React from "react";
-import useWatchHistory from "../Hooks/useWatchHistory";
+import React, { useEffect, useState } from "react";
+import useWatchHistory from "../Hooks/useWatchHistory"; 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
+import { Video } from "@/interfaces/videoInterface";
 
 const WatchHistory = () => {
-  const { watchHistoryData, removeFromWatchHistory } = useWatchHistory();
+  const { ids, removeFromWatchHistory,fetchWatchHistoryData } = useWatchHistory();
+    const [watchHistoryData, setWatchHistoryData] = useState<Video[]>([]);
   const router = useRouter();
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    const data = await fetchWatchHistoryData(ids);  
+    if (data) {
+      setWatchHistoryData(data);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
   return (
     <div className="p-4 space-y-6 overflow-y-scroll h-[90vh]">
