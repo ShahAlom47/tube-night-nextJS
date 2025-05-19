@@ -18,8 +18,10 @@ export default async function Home() {
         <HomeVideoContainer videos={videos} />
       ) : (
         <div className="flex items-center justify-center h-screen">
+          
           <h1 className="text-2xl font-bold">No videos found</h1>
         </div>
+   
       )
     }
     </div>

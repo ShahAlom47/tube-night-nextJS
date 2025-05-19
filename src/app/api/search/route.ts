@@ -8,7 +8,7 @@ export async function GET(req: Request) {
   const maxResults = 15
   const regionCode = "BD"
 
-  console.log("YT_API_KEY:", API_KEY)
+  
 
   if (!query) {
     return NextResponse.json({ error: "Search query missing" }, { status: 400 })
@@ -19,7 +19,7 @@ export async function GET(req: Request) {
       `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&regionCode=${regionCode}&maxResults=${maxResults}&key=${API_KEY}`
     )
 
-    console.log("YouTube API response status:", response.status)
+   
 
     if (!response.ok) {
       const errorData = await response.json()

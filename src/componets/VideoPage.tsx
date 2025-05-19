@@ -7,18 +7,20 @@ import RelatedVideos from "./RelatedVideos";
 import Loading from "@/app/loading";
 import { IoMdDownload } from "react-icons/io";
 import DownloadModal from "./DownloadModal";
+import  useWatchHistory  from "@/Hooks/useWatchHistory";
 
 interface VideoPageProps {
   videoId: string;
 }
 
 const VideoPage: React.FC<VideoPageProps> = ({ videoId }) => {
+  const { addToDownloadHistory,downloadData}=useWatchHistory();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [videoData, setVideoData] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [relatedVideos, setRelatedVideos] = useState<any[]>([]);
 
-
+console.log(downloadData)
 
   useEffect(() => {
     const fetchVideoData = async () => {
@@ -26,13 +28,13 @@ const VideoPage: React.FC<VideoPageProps> = ({ videoId }) => {
       const data = await res.json();
     
       setVideoData(data);
+      addToDownloadHistory(videoId);
     };
 
     // সম্পর্কিত ভিডিও ফেচ করা
     const fetchRelatedVideos = async () => {
       const res = await fetch(`/api/related/${videoId}`);
       const data = await res.json();
-      console.log(data)
       setRelatedVideos(data.items);
     };
 

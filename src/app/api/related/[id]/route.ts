@@ -6,10 +6,11 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const API_KEY = process.env.YT_API_KEY;
+  const { id } = await params;
 
   // প্রথমে, ভিডিওর শিরোনাম ফেচ করুন
   const videoRes = await fetch(
-    `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${params.id}&key=${API_KEY}`
+    `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=${API_KEY}`
   );
   const videoData = await videoRes.json();
 

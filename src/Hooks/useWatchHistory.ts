@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const DOWNLOAD_HISTORY_KEY = "download_history_ids";
+const DOWNLOAD_HISTORY_KEY = "watch_history_ids";
 
 interface VideoData {
   id: string;
@@ -9,18 +9,26 @@ interface VideoData {
   thumbnail: string;
 }
 
-export const useDownloadHistory = () => {
+ const useDownloadHistory = () => {
   const [downloadData, setDownloadData] = useState<VideoData[]>([]);
 
   // ✅ Add to history
-  const addToDownloadHistory = (id: string) => {
-    const existing: string[] = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
-    if (!existing.includes(id)) {
-      const updated = [...existing, id];
-      localStorage.setItem(DOWNLOAD_HISTORY_KEY, JSON.stringify(updated));
-      fetchVideoData(updated);
+const addToDownloadHistory = (id: string) => {
+  const existing: string[] = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
+
+  // Check if ID already exists
+  if (!existing.includes(id)) {
+    // If 12 or more, remove the oldest (first one)
+    if (existing.length >= 12) {
+      existing.shift();
     }
-  };
+
+    const updated = [...existing, id];
+    localStorage.setItem(DOWNLOAD_HISTORY_KEY, JSON.stringify(updated));
+    fetchVideoData(updated);
+  }
+};
+
 
   // ✅ Remove from history
   const removeFromDownloadHistory = (id: string) => {
@@ -56,3 +64,6 @@ const fetchVideoData = async (ids: string[]) => {
     removeFromDownloadHistory,
   };
 };
+
+
+export default useDownloadHistory;

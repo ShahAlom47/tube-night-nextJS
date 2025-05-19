@@ -2,7 +2,7 @@
 
 import VideoPage from "@/componets/VideoPage";
 
-export default function WatchPage({ params }: { params: { id: string } }) {
-    
-  return <VideoPage videoId={params.id} />;
+export default async function WatchPage({ params }: { params: { id: string } }) {
+  const { id } = await params
+  return <VideoPage videoId={id} />;
 }
