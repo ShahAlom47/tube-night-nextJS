@@ -1,32 +1,49 @@
+import { Video } from "@/interfaces/videoInterface";
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const DOWNLOAD_HISTORY_KEY = "download_history_ids";
 
-interface VideoData {
-  id: string;
-  title: string;
-  thumbnail: string;
-}
-
 export const useDownloadHistory = () => {
-  const [downloadData, setDownloadData] = useState<VideoData[]>([]);
+  const [downloadData, setDownloadData] = useState<Video[]>([]);
 
   const addToDownloadHistory = (id: string) => {
-    const existing = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
+    const existing: string[] = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
+
     if (!existing.includes(id)) {
-      const updated = [...existing, id];
+      if (existing.length >= 12) {
+        existing.pop(); // Remove the oldest (last one)
+      }
+
+      const updated = [id, ...existing]; // Newest at the front
       localStorage.setItem(DOWNLOAD_HISTORY_KEY, JSON.stringify(updated));
       fetchVideoData(updated);
     }
   };
 
   const fetchVideoData = async (ids: string[]) => {
-    const data = ids.map((id) => ({
-      id,
-      title: `Video Title for ${id}`,
-      thumbnail: `https://img.youtube.com/vi/${id}/0.jpg`,
-    }));
-    setDownloadData(data);
+     if (!ids.length) {
+    setDownloadData([]);
+    return;
+  }
+    try {
+      const query = ids.map((id) => `ids=${id}`).join("&");
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/getHistory?${query}`
+      );
+
+      const data: Video[] = response?.data;
+      setDownloadData(data);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
+  const removeFromDownloadHistory = (id: string) => {
+    const existing: string[] = JSON.parse(localStorage.getItem(DOWNLOAD_HISTORY_KEY) || "[]");
+    const updated = existing.filter((storedId) => storedId !== id);
+    localStorage.setItem(DOWNLOAD_HISTORY_KEY, JSON.stringify(updated));
+    fetchVideoData(updated);
   };
 
   useEffect(() => {
@@ -34,5 +51,9 @@ export const useDownloadHistory = () => {
     if (saved.length) fetchVideoData(saved);
   }, []);
 
-  return { downloadData, addToDownloadHistory };
+  return {
+    downloadData,
+    addToDownloadHistory,
+    removeFromDownloadHistory,
+  };
 };

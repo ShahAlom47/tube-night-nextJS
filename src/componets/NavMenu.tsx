@@ -4,7 +4,7 @@ import CustomDrawer from "./CustomDrawer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GoHistory } from "react-icons/go";
 import WatchHistory from "./WatchHistory";
-import DownloadHistory from "./DownloadHistory ";
+import DownloadHistory from "./DownloadHistory";
 
 const NavMenu = () => {
   return (

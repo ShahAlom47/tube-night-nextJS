@@ -7,7 +7,6 @@ interface HomeVideoContainerProps {
 }
 
 const HomeVideoContainer: React.FC<HomeVideoContainerProps> = ({ videos }) => {
-  console.log(videos)
   if (!videos || videos.length === 0) {
     return (
       <div className="flex items-center justify-center h-screen">

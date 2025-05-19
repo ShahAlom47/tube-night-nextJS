@@ -1,3 +1,5 @@
+"use client";
+import { useDownloadHistory } from "@/Hooks/useDownloadHistory";
 import axios from "axios";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
@@ -37,6 +39,7 @@ const DownloadModal: React.FC<DownloadModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [videoData, setVideoData] = useState<VideoData | null>(null);
   const [selectedFormat, setSelectedFormat] = useState<Format | null>(null);
+  const {addToDownloadHistory}= useDownloadHistory();
 
   const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
@@ -113,6 +116,8 @@ const DownloadModal: React.FC<DownloadModalProps> = ({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+addToDownloadHistory(videoId);
+    closeModal();
   };
 
   return (

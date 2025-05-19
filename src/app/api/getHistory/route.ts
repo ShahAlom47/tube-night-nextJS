@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const ids = searchParams.getAll("ids"); // collect multiple ?ids=abc&ids=def
-  console.log("idddddddddddddd",ids)
 
   const API_KEY = process.env.YT_API_KEY;
 

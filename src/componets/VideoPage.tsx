@@ -14,13 +14,13 @@ interface VideoPageProps {
 }
 
 const VideoPage: React.FC<VideoPageProps> = ({ videoId }) => {
-  const { addToDownloadHistory,downloadData}=useWatchHistory();
+  const { addToWatchHistory}=useWatchHistory();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [videoData, setVideoData] = useState<any>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [relatedVideos, setRelatedVideos] = useState<any[]>([]);
 
-console.log(downloadData)
+
 
   useEffect(() => {
     const fetchVideoData = async () => {
@@ -28,7 +28,7 @@ console.log(downloadData)
       const data = await res.json();
     
       setVideoData(data);
-      addToDownloadHistory(videoId);
+      addToWatchHistory(videoId);
     };
 
     // সম্পর্কিত ভিডিও ফেচ করা

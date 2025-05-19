@@ -1,19 +1,19 @@
 "use client";
 
 import React from "react";
-import useWatchHistory from "../Hooks/useWatchHistory";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
+import { useDownloadHistory } from "@/Hooks/useDownloadHistory";
 
-const WatchHistory = () => {
-  const { watchHistoryData, removeFromWatchHistory } = useWatchHistory();
+const DownloadHistory = () => {
+  const { downloadData, removeFromDownloadHistory } = useDownloadHistory();
   const router = useRouter();
 
   return (
     <div className="p-4 space-y-6 overflow-y-scroll h-[90vh]">
-      {watchHistoryData?.length > 0 ? (
-        watchHistoryData.map((item, index: number) => {
+      {downloadData?.length > 0 ? (
+        downloadData.map((item, index: number) => {
           const snippet = item.snippet;
           const title = snippet?.title;
           const image =
@@ -22,7 +22,7 @@ const WatchHistory = () => {
           return (
             <div
               key={item.id || index}
-              className="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row gap-4 border-b-2 border-red-500 border-opacity-40 hover:border-opacity-100 transition-all duration-300 ease-in-out"
+              className="bg-white shadow-md rounded-xl p-4 flex flex-col md:flex-row gap-4 border-b-2 border-blue-500 border-opacity-40 hover:border-opacity-100 transition-all duration-300 ease-in-out"
             >
               <div
                 onClick={() => router.push(`/watch/${item?.id}`)}
@@ -42,9 +42,9 @@ const WatchHistory = () => {
               </div>
 
               <button
-                onClick={() => removeFromWatchHistory(item.id)}
-                className="text-red-500 hover:text-red-700 transition duration-200"
-                title="Remove from history"
+                onClick={() => removeFromDownloadHistory(item.id)}
+                className="text-blue-500 hover:text-blue-700 transition duration-200"
+                title="Remove from download history"
               >
                 <Trash2 size={18} />
               </button>
@@ -52,10 +52,10 @@ const WatchHistory = () => {
           );
         })
       ) : (
-        <div className="text-center text-gray-500">No History</div>
+        <div className="text-center text-gray-500">No Download History</div>
       )}
     </div>
   );
 };
 
-export default WatchHistory;
+export default DownloadHistory;
