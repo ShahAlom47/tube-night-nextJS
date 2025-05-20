@@ -7,6 +7,9 @@ export async function GET(
 ) {
   const API_KEY = process.env.YT_API_KEY;
   const { id } = await params;
+   if (!id) {
+    return NextResponse.json({ error: "id not  found" }, { status: 404 });
+  }
 
   // প্রথমে, ভিডিওর শিরোনাম ফেচ করুন
   const videoRes = await fetch(

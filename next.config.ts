@@ -1,5 +1,5 @@
-import { NextConfig } from "next";
 import withPWA from "next-pwa";
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["i.ytimg.com", "img.youtube.com"],
   },
+  // এখানে আর কিছু লাগলে দিতে পারো
 };
 
 export default withPWA({
@@ -14,6 +15,6 @@ export default withPWA({
   register: true,
   skipWaiting: true,
   disable: process.env.NODE_ENV === "development",
-  runtimeCaching: [], // ক্যাশিং বন্ধ রাখতে
-  ...nextConfig,
-});
+  runtimeCaching: [],
+})(nextConfig);
+
