@@ -22,25 +22,26 @@ const VideoPage: React.FC<VideoPageProps> = ({ videoId }) => {
 
 
 
-  useEffect(() => {
-    const fetchVideoData = async () => {
-      const res = await fetch(`/api/videos/${videoId}`);
-      const data = await res.json();
-    
-      setVideoData(data);
-      addToWatchHistory(videoId);
-    };
+ useEffect(() => {
+  const fetchVideoData = async () => {
+    const res = await fetch(`/api/videos/${videoId}`);
+    const data = await res.json();
+    setVideoData(data);
+    addToWatchHistory(videoId);
 
-    // সম্পর্কিত ভিডিও ফেচ করা
-    const fetchRelatedVideos = async () => {
-      const res = await fetch(`/api/related/${videoId}`);
-      const data = await res.json();
-      setRelatedVideos(data.items);
-    };
+    // ভিডিও শিরোনাম পেয়ে তারপর related ভিডিও ফেচ
+    if (data?.snippet?.title) {
+      const relatedRes = await fetch(
+        `/api/related?title=${encodeURIComponent(data.snippet.title)}`
+      );
+      const relatedData = await relatedRes.json();
+      setRelatedVideos(relatedData.items || []);
+    }
+  };
 
-    fetchVideoData();
-    fetchRelatedVideos();
-  }, [videoId]);
+  fetchVideoData();
+}, [videoId]);
+
 
   if (!videoData) {
     return <Loading />;
