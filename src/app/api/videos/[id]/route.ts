@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
-    const { id } = params;
+    const { id } =await  params;
     const API_KEY = process.env.YT_API_KEY;
 
     if (!id || !/^[a-zA-Z0-9_-]{11}$/.test(id)) {
