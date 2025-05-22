@@ -13,16 +13,20 @@ const WatchHistory = () => {
   const router = useRouter();
 
 
+console.log(watchHistoryData,ids)
 useEffect(() => {
   const fetchData = async () => {
+    console.log(ids)
     const data = await fetchWatchHistoryData(ids);  
+    console.log(data)
     if (data) {
       setWatchHistoryData(data);
     }
   };
-
+if (ids.length > 0) {
   fetchData();
-}, []);
+}
+}, [ids]);
 
 
   return (

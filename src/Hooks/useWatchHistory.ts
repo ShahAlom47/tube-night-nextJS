@@ -1,5 +1,3 @@
-import { Video } from "@/interfaces/videoInterface";
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 const WATCH_HISTORY_KEY = "watch_history_ids";
@@ -11,14 +9,12 @@ const useWatchHistory = () => {
   const addToWatchHistory = (id: string) => {
     const existing: string[] = JSON.parse(localStorage.getItem(WATCH_HISTORY_KEY) || "[]");
 
-    // If ID is not already in the list
     if (!existing.includes(id)) {
-      // Keep only the last 12 items
       if (existing.length >= 12) {
-        existing.pop(); // remove the oldest (last one, since new one will go to the front)
+        existing.pop();
       }
 
-      const updated = [id, ...existing]; // Add new ID to the beginning
+      const updated = [id, ...existing];
       localStorage.setItem(WATCH_HISTORY_KEY, JSON.stringify(updated));
       setIds(updated);
     }
@@ -29,40 +25,38 @@ const useWatchHistory = () => {
     const existing: string[] = JSON.parse(localStorage.getItem(WATCH_HISTORY_KEY) || "[]");
     const updated = existing.filter((storedId) => storedId !== id);
     localStorage.setItem(WATCH_HISTORY_KEY, JSON.stringify(updated));
-    fetchWatchHistoryData(updated);
+    setIds(updated);
   };
 
-  // ✅ Fetch video data from server 
+  // ✅ Only return data, no state update
   const fetchWatchHistoryData = async (ids: string[]) => {
-     if (!ids.length) {
-    setIds([]);
-    return;
-  }
+    console.log(ids)
+    if (ids.length === 0) return [];
+
     try {
       const query = ids.map((id) => `ids=${id}`).join("&");
-      const response = await axios.get(
+      const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/getHistory?${query}`
       );
-
-      const data: Video[] = response?.data;
-     return data
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error("Fetch error:", error);
+      return [];
     }
   };
 
-  // ✅ On mount
+  // ✅ Only load IDs on mount
   useEffect(() => {
     const saved: string[] = JSON.parse(localStorage.getItem(WATCH_HISTORY_KEY) || "[]");
-    if (saved.length) fetchWatchHistoryData(saved);
+    setIds(saved);
   }, []);
 
   return {
     ids,
     addToWatchHistory,
     removeFromWatchHistory,
-  fetchWatchHistoryData 
-
+    fetchWatchHistoryData,
   };
 };
 
