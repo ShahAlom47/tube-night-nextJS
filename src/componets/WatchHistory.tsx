@@ -13,12 +13,9 @@ const WatchHistory = () => {
   const router = useRouter();
 
 
-console.log(watchHistoryData,ids)
 useEffect(() => {
   const fetchData = async () => {
-    console.log(ids)
     const data = await fetchWatchHistoryData(ids);  
-    console.log(data)
     if (data) {
       setWatchHistoryData(data);
     }

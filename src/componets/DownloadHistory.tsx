@@ -19,9 +19,11 @@ useEffect(() => {
       setDownloadData(data);
     }
   };
+if (ids.length > 0) {
 
   fetchData();
-}, []);
+}
+}, [ids]);
 
   return (
     <div className="p-4 space-y-6 overflow-y-scroll h-[90vh]">

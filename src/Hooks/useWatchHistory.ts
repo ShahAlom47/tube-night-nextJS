@@ -30,7 +30,6 @@ const useWatchHistory = () => {
 
   // ✅ Only return data, no state update
   const fetchWatchHistoryData = async (ids: string[]) => {
-    console.log(ids)
     if (ids.length === 0) return [];
 
     try {
