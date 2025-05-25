@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TubeNight — YouTube Watch & Download App
 
-## Getting Started
+Live: https://tube-night.vercel.app/
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Note:** Due to current YouTube restrictions, the download feature is temporarily disabled. Video playback and search are working as expected. The download functionality will be restored once the issue is resolved.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+TubeNight is a YouTube watching and downloading web application designed primarily for a small group of users. Users can search YouTube videos or play and download videos directly using a YouTube link.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app is built using the following technologies:
 
-## Learn More
+- React (Next.js)
+- TypeScript
+- Tailwind CSS
+- Backend API routes (Next.js) to fetch video data and Node.js for  download functionality
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Search and play YouTube videos
+- Play videos using direct links
+- (Temporarily disabled) Download videos
+- Lightweight and fast performance
+- Mobile-friendly responsive design
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technologies Used
 
-## Deploy on Vercel
+| Technology    | Purpose                          |
+|---------------|----------------------------------|
+| Next.js       | Frontend and backend API routes  |
+| TypeScript    | Static typing and code reliability |
+| Tailwind CSS  | Styling and responsive layout    |
+| youtube-dl / ytdl-core (planned) | Video data fetching and download |
+|Progressive Web App (PWA)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
